@@ -21,8 +21,9 @@
      #'(#%module-begin
         expr ...)]))
 
-(define-syntax-rule (i-lambda (x) expr)
-  (lambda (x) expr))
+(define-syntax (i-lambda stx)
+  (syntax-parse stx
+    [(_ (~or x:id (x:id)) expr) #'(lambda (x) expr)]))
 
 (define-syntax-rule (app x y)
   (#%app x y))

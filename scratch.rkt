@@ -1,6 +1,6 @@
 #lang lambda-calculus
 
-(def identity (λ (x) x))
+(def identity (λ x x))
 
 (identity true)
 
