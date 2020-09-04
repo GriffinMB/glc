@@ -1,12 +1,7 @@
 #lang lambda-calculus/base
 
-(provide true false
-         cond if
-         not and or)
-
-(def true (λ x (λ y x)))
-
-(def false (λ x (λ y y)))
+(require "core.rkt")
+(provide (all-defined-out))
 
 (def cond
   (λ e1
@@ -16,7 +11,7 @@
 (def if
   (λ c
     (λ e1
-      (λ e2 (((cond e1) e2) c)))))
+      (λ e2 ((c e1) e2)))))
 
 (def not (λ x ((x false) true)))
 

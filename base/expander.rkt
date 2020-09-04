@@ -10,7 +10,8 @@
                      [no-literals #%datum]
                      [unbound-as-quoted #%top])
 
-         def require provide
+         def require provide all-defined-out
+         print
 
          ; module exports
          #%top-interaction)
@@ -20,6 +21,16 @@
     [(_:id expr ...)
      #'(#%module-begin
         expr ...)]))
+
+(define (print proc)
+  (displayln (eval (get-lambda-proc proc))))
+
+(define (get-lambda-proc p)
+  (define proc (format "~a" p))
+
+  (string->symbol
+   (format "lambda~a"
+           (string-trim proc (regexp "[#<>]") #:repeat? #t))))
 
 (define-syntax (i-lambda stx)
   (syntax-parse stx
@@ -37,4 +48,7 @@
 (define-syntax (def stx)
   (syntax-parse stx
     [(_ id:id expr:expr)
-     #'(define id expr)]))
+     (with-syntax ([lambda-proc (format-id stx "lambdaprocedure:~a" (syntax-e #'id))])
+       #'(begin
+           (define id expr)
+           (define lambda-proc 'expr)))]))

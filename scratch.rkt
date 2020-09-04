@@ -8,3 +8,5 @@
 (((cond x) y) false)
 
 (((if true) x) y)
+
+(succ zero)
