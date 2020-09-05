@@ -1,12 +1,7 @@
 #lang lambda-calculus
 
-(def identity (λ x x))
+(def x (pred (pred two)))
 
-(identity true)
-
-(((cond x) y) true)
-(((cond x) y) false)
-
-(((if true) x) y)
+(((if (is-zero? x)) its-zero!) its-not-zero!)
 
 (succ zero)
