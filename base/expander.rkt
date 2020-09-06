@@ -1,6 +1,6 @@
 #lang racket
 
-(require syntax/parse
+(require syntax/parse racket/require
          (for-syntax racket/syntax syntax/parse))
 
 (provide (rename-out [module-begin #%module-begin]
@@ -10,7 +10,16 @@
                      [no-literals #%datum]
                      [unbound-as-quoted #%top])
 
-         def require provide all-defined-out
+         ; provide/require
+         provide
+         require
+         all-defined-out
+         only-in
+
+         ; test helpers
+         module+
+
+         def
          print
 
          ; module exports
