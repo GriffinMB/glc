@@ -2,6 +2,4 @@
 
 (def x (pred (pred two)))
 
-(((if (is-zero? x)) its-zero!) its-not-zero!)
-
-(succ zero)
+(if (is-zero? x) is-zero is-not-zero)

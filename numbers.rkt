@@ -1,6 +1,6 @@
 #lang lambda-calculus/base
 
-(require "core.rkt")
+(require "core.rkt" "cond.rkt" (only-in racket displayln begin) racket/promise)
 (provide (all-defined-out))
 
 (module+ test
@@ -28,3 +28,5 @@
 
 (module+ test
   (check-equal? zero (pred one)))
+
+(def add (λ x (λ y (if (is-zero? y) x ((add (succ x)) (pred y))))))

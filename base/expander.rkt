@@ -19,6 +19,9 @@
          ; test helpers
          module+
 
+         ; primitives
+         if
+
          def
          print
 
