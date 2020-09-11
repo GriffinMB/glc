@@ -10,9 +10,9 @@
 (def false (λ x (λ y y)))
 
 (module+ test
-  (check-equal? ident (identity ident))
-  (check-equal? true (identity true))
-  (check-equal? false (identity false)))
+  (check-equal? ident (! (identity ident)))
+  (check-equal? true (! (identity true)))
+  (check-equal? false (! (identity false))))
 
 (def select-first true)
 (def select-second false)

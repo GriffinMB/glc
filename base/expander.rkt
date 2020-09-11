@@ -1,6 +1,7 @@
 #lang racket
 
 (require syntax/parse racket/require
+         (rename-in lazy (lambda lazy:lambda))
          (for-syntax racket/syntax syntax/parse))
 
 (provide (rename-out [module-begin #%module-begin]
@@ -20,7 +21,8 @@
          module+
 
          ; primitives
-         if
+         !
+         !!
 
          def
          print
@@ -46,7 +48,7 @@
 
 (define-syntax (i-lambda stx)
   (syntax-parse stx
-    [(_ (~or x:id (x:id)) expr) #'(lambda (x) expr)]))
+    [(_ (~or x:id (x:id)) expr) #'(lazy:lambda (x) expr)]))
 
 (define-syntax-rule (app x y)
   (#%app x y))
