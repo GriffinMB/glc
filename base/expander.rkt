@@ -24,8 +24,10 @@
          !
          !!
 
+         ; base
          def
          print
+         lambda->number
 
          ; module exports
          #%top-interaction)
@@ -38,6 +40,11 @@
 
 (define (print proc)
   (displayln (eval (get-lambda-proc proc))))
+
+(define (lambda->number num (count 0))
+  (if (equal? "#<procedure:identity>" (format "~a" num))
+      count
+      (lambda->number (num (lambda (x) (lambda (y) y))) (+ count 1))))
 
 (define (get-lambda-proc p)
   (define proc (format "~a" p))
