@@ -1,6 +1,6 @@
 #lang lambda-calculus/base
 
-(require "core.rkt" "cond.rkt" (only-in racket displayln begin) racket/promise)
+(require "core.rkt" "cond.rkt")
 (provide (all-defined-out))
 
 (module+ test
