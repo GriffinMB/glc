@@ -7,4 +7,6 @@
 
 @defmodule[lambda-calculus]
 
-Package Description Here
+An untyped, lazy lambda calculus.
+
+@defmodule[lambda-calculus/base]

@@ -1,6 +1,7 @@
 #lang info
 (define collection "lambda-calculus")
-(define deps '("base"))
+(define deps '("lazy"
+               "base"))
 (define build-deps '("scribble-lib" "racket-doc" "rackunit-lib"))
 (define scribblings '(("scribblings/lambda-calculus.scrbl" ())))
 (define pkg-desc "Description Here")
