@@ -1,6 +1,7 @@
 #lang lambda-calculus/base
 
 (require "core.rkt" "cond.rkt" "numbers.rkt")
+(provide (all-defined-out))
 
 (module+ test
   (require (only-in racket #%datum) rackunit))

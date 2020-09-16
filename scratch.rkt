@@ -3,3 +3,5 @@
 (def x (pred (pred two)))
 
 (((if (is-zero? x)) is-zero) is-not-zero)
+
+(lambda->number (length ((cons one) nil)))
