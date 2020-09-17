@@ -57,8 +57,10 @@
   (syntax-parse stx
     [(_ (~or x:id (x:id)) expr) #'(lazy:lambda (x) expr)]))
 
-(define-syntax-rule (app x y)
-  (#%app x y))
+(define-syntax (app stx)
+  (syntax-parse stx
+    [(_ x y) #'(#%app x y)]
+    [(_ x y z ...) #'(app (#%app x y) z ...)]))
 
 (define-syntax (no-literals stx)
   (raise-syntax-error #f "no" stx))

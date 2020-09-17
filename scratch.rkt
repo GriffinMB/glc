@@ -1,7 +1,5 @@
 #lang lambda-calculus
 
-(def x (pred (pred two)))
+(if true hello bye)
 
-(((if (is-zero? x)) is-zero) is-not-zero)
-
-(lambda->number (length ((cons one) nil)))
+(lambda->number (add one two))

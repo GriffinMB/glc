@@ -8,8 +8,8 @@
   (require rackunit))
 
 (def zero identity)
-(def succ (λ n (λ s ((s false) n))))
-(def pred (λ n (((is-zero? n) zero) (n false))))
+(def succ (λ n (λ s (s false n))))
+(def pred (λ n ((is-zero? n zero) (n false))))
 (def is-zero? (λ n (n true)))
 
 (module+ test
@@ -35,13 +35,13 @@
 (module+ test
   (check-equal? zero (! (pred one))))
 
-(def add (λ x (λ y (((if (is-zero? y)) x) ((add (succ x)) (pred y))))))
+(def add (λ x (λ y (if (is-zero? y) x (add (succ x) (pred y))))))
 
 (module+ test
   (check-equal? zero (! (pred (pred ((add one) one)))))
   (check-equal? 7 (! (lambda->number ((add three) four)))))
 
-(def sub (λ x (λ y (((if (is-zero? y)) x) ((sub (pred x)) (pred y))))))
+(def sub (λ x (λ y (if (is-zero? y) x (sub (pred x) (pred y))))))
 
 (module+ test
   (check-equal? 5 (! (lambda->number ((sub ((add three) four)) two)))))
