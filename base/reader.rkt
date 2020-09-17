@@ -1,2 +1,2 @@
 #lang s-exp syntax/module-reader
-"base/expander.rkt"
+lambda-calculus/base/expander
