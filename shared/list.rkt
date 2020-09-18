@@ -1,4 +1,4 @@
-#lang lambda-calculus/base
+#lang glc/base
 
 (require "core.rkt" "cond.rkt" "numbers.rkt")
 (provide (all-defined-out))

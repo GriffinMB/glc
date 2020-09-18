@@ -1,4 +1,4 @@
-#lang lambda-calculus
+#lang glc
 
 (if true hello bye)
 

@@ -1,4 +1,4 @@
-#lang lambda-calculus/base
+#lang glc/base
 
 (provide (all-defined-out))
 

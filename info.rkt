@@ -1,9 +1,9 @@
 #lang info
-(define collection "lambda-calculus")
+(define collection "glc")
 (define deps '("lazy"
                "base"))
 (define build-deps '("scribble-lib" "racket-doc" "rackunit-lib"))
-(define scribblings '(("scribblings/lambda-calculus.scrbl" ())))
+(define scribblings '(("scribblings/glc.scrbl" ())))
 (define pkg-desc "Description Here")
-(define version "0.0")
-(define pkg-authors '(griffinbyatt))
+(define version "0.1")
+(define pkg-authors '(gmb))
