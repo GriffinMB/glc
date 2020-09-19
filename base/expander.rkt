@@ -4,12 +4,12 @@
          (rename-in lazy (lambda lazy:lambda))
          (for-syntax racket/syntax syntax/parse))
 
-(provide (rename-out [module-begin #%module-begin]
-                     [i-lambda lambda]
-                     [i-lambda λ]
-                     [app #%app]
-                     [no-literals #%datum]
-                     [unbound-as-quoted #%top])
+(provide (rename-out [glc-module-begin #%module-begin]
+                     [glc-lambda lambda]
+                     [glc-lambda λ]
+                     [glc-app #%app]
+                     [glc-datum #%datum]
+                     [glc-top #%top])
 
          ; provide/require
          provide
@@ -26,52 +26,38 @@
 
          ; base
          def
-         print
          lambda->number
 
          ; module exports
          #%top-interaction)
 
-(define-syntax (module-begin stx)
+(define-syntax (glc-module-begin stx)
   (syntax-parse stx
     [(_:id expr ...)
      #'(#%module-begin
         expr ...)]))
-
-(define (print proc)
-  (displayln (eval (get-lambda-proc proc))))
 
 (define (lambda->number num (count 0))
   (if (equal? "#<procedure:identity>" (format "~a" num))
       count
       (lambda->number (num (lambda (x) (lambda (y) y))) (+ count 1))))
 
-(define (get-lambda-proc p)
-  (define proc (format "~a" p))
-
-  (string->symbol
-   (format "lambda~a"
-           (string-trim proc (regexp "[#<>]") #:repeat? #t))))
-
-(define-syntax (i-lambda stx)
+(define-syntax (glc-lambda stx)
   (syntax-parse stx
     [(_ (~or x:id (x:id)) expr) #'(lazy:lambda (x) expr)]))
 
-(define-syntax (app stx)
+(define-syntax (glc-app stx)
   (syntax-parse stx
     [(_ x y) #'(#%app x y)]
-    [(_ x y z ...) #'(app (#%app x y) z ...)]))
+    [(_ x y z ...) #'(glc-app (#%app x y) z ...)]))
 
-(define-syntax (no-literals stx)
+(define-syntax (glc-datum stx)
   (raise-syntax-error #f "no" stx))
 
-(define-syntax-rule (unbound-as-quoted . id)
+(define-syntax-rule (glc-top . id)
   'id)
 
 (define-syntax (def stx)
   (syntax-parse stx
     [(_ id:id expr:expr)
-     (with-syntax ([lambda-proc (format-id stx "lambdaprocedure:~a" (syntax-e #'id))])
-       #'(begin
-           (define id expr)
-           (define lambda-proc 'expr)))]))
+     #'(define id expr)]))
