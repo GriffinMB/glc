@@ -2,7 +2,7 @@
 
 (require syntax/parse racket/require
          (rename-in lazy (lambda lazy:lambda))
-         (for-syntax racket/syntax syntax/parse))
+         (for-syntax racket/syntax racket/list syntax/parse))
 
 (provide (rename-out [glc-module-begin #%module-begin]
                      [glc-lambda lambda]
@@ -10,6 +10,8 @@
                      [glc-app #%app]
                      [glc-datum #%datum]
                      [glc-top #%top])
+
+         (for-syntax normalize-app)
 
          ; provide/require
          provide
@@ -47,12 +49,30 @@
     [(_ (~or x:id (x:id)) expr) #'(lazy:lambda (x) expr)]))
 
 (define-syntax (glc-app stx)
-  (syntax-parse stx
-    [(_ x y) #'(#%app x y)]
-    [(_ x y z ...) #'(glc-app (#%app x y) z ...)]))
+  (define normalized (normalize-app (cdr (syntax->datum stx))))
+
+  (syntax-parse (datum->syntax stx normalized)
+    [(x y) #'(#%app x y)]))
+
+(define-for-syntax (normalize-app dat)
+  (if (and (list? dat) (<= 2 (length dat)))
+      (let*-values ([(abs?) (equal? (car dat) 'λ)]
+                    [(split) (if abs? 3 2)]
+                    [(left right) (split-at dat split)]
+                    [(empty-right?) (empty? right)]
+                    [(lleft) (car left)]
+                    [(rleft) (car (cdr left))])
+
+        (cond
+          [(and abs? empty-right?)
+           (list lleft rleft (normalize-app (third left)))]
+          [empty-right? (cons (normalize-app lleft) (list (normalize-app rleft)))]
+          [else (normalize-app (cons left right))]))
+
+      dat))
 
 (define-syntax (glc-datum stx)
-  (raise-syntax-error #f "no" stx))
+  (raise-syntax-error #f "Invalid use of datum literal" stx))
 
 (define-syntax-rule (glc-top . id)
   'id)

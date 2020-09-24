@@ -3,5 +3,3 @@
 (if true hello bye)
 
 (lambda->number (add one two))
-
-(lambda->number ((λ x (x two two)) add))
