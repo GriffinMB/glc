@@ -21,5 +21,8 @@
 (: add-x (Number (Number Number)))
 (def add-x (λ x (add x)))
 
+(: c (Boolean Boolean))
+(def c (λ x (if x true (c x))))
+
 (lambda->number (add one two))
 (lambda->number ((add-x four) one))
