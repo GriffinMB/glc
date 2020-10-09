@@ -104,7 +104,7 @@
                   [sx1 (format "~a" x1)])
 
              (let ([return-type
-                    (if (equal? y-type x1)
+                    (if (match-type? y-type x1)
                         xrest
                         (if (equal? sx1 (string-downcase sx1))
                             (map (lambda (var)
@@ -118,3 +118,19 @@
                    (car return-type)
                    return-type)))]
     [x (displayln #'x)]))
+
+(define-for-syntax (match-type? y x [tkn #f])
+  (cond
+    ; basic type case
+    [(equal? y x) #t]
+
+    ; U constructor
+    [(equal? tkn 'U) (index-of x y)]
+
+    ; List constructor
+    [(equal? tkn 'List) (equal? (last x) y)]
+
+    [(list? x) (match-type? y (cdr x) (car x))]
+
+    ; no match or parameterized
+    [else #f]))

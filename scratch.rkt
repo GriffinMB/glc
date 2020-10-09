@@ -8,9 +8,13 @@
 (: two Number)
 (: three Number)
 (: four Number)
+(: nil Nil)
 (: true Boolean)
 (: false Boolean)
 (: lambda->number (Number Void))
+
+(: cons (Number (U (List Number) Nil) (List Number)))
+(: head ((List Number) Number))
 
 (: a (Number Number Number))
 (def a (λ x (λ y (add (succ one) y))))
@@ -26,3 +30,5 @@
 
 (lambda->number (add one two))
 (lambda->number ((add-x four) one))
+
+(lambda->number (head (cons two (cons false nil))))
