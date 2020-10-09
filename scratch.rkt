@@ -31,4 +31,4 @@
 (lambda->number (add one two))
 (lambda->number ((add-x four) one))
 
-(lambda->number (head (cons two (cons false nil))))
+(lambda->number (head (cons two (cons one nil))))

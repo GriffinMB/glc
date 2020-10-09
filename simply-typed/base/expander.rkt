@@ -127,9 +127,6 @@
     ; U constructor
     [(equal? tkn 'U) (index-of x y)]
 
-    ; List constructor
-    [(equal? tkn 'List) (equal? (last x) y)]
-
     [(list? x) (match-type? y (cdr x) (car x))]
 
     ; no match or parameterized
